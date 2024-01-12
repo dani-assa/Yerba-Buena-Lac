@@ -1,0 +1,9 @@
+.imgLogo {
+  width: 100px;
+  transition: all 0.5s;
+}
+
+.imgLogo:hover {
+  width: 115px;
+}
+
