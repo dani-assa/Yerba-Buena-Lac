@@ -53,7 +53,8 @@ const handleSubmit = async(e) => {
         email: user.email,
         name: user.name,
         lastName: user.lastName,
-        userId: user.id
+        userId: user.id,
+        role: user.role
       });
       localStorage.setItem('userLog', userJson);
       alertCustom('Good!', 'Login exitoso', 'success', () => navigate('/'))

@@ -1,10 +1,18 @@
 import React from 'react';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { imgLogo } from './navbar.module.css';
 
 
 const Navbar1 = () => {
+  const user = JSON.parse(localStorage.getItem("userLog")) || undefined;
+  const navigate = useNavigate();
+
+  const cerrarSesion = () => {
+    localStorage.clear()
+    navigate('/')
+  }
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -48,7 +56,20 @@ const Navbar1 = () => {
                   className='text-decoration-none link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover'
                 >Contacto</Link>
               </Navbar.Text>
-              <div className='mt-1'>
+              {user 
+              ?(
+                <>
+                  <li className="nav-item mt-2 ms-5">
+                    <b className="mb-3">Bienvenid@ {user.name}</b>
+                  </li>
+                  <li className='nav-item'>
+                    <Button variant='info' size='sm' className='mt-1 ms-3 text-ligth fw-semibold' onClick={cerrarSesion}>Cerrar sesión</Button>
+                  </li>
+                </>
+
+              )
+              : (
+                <div className='mt-1'>
                 <Button variant='info' size='sm' className='ms-lg-5'>
                   <Link to='/login' className='text-decoration-none fw-semibold text-light'>Iniciar sesión</Link></Button>
                 <Navbar.Text>
@@ -57,6 +78,17 @@ const Navbar1 = () => {
                   >Registrate</Link>
                 </Navbar.Text>
               </div>
+              )
+              }
+              {user?.role === 'ADMIN'
+                ? (
+                  <li className='nav-item'>
+                    <Button variant='dark' size='sm' className='mt-1 ms-3 text-ligth fw-semibold' onClick={() => navigate('/admin')} >Panel Admin</Button>
+                  </li>
+                )
+                : ''
+              }
+              
             </Nav>
           </Navbar.Collapse>
         </Container>
