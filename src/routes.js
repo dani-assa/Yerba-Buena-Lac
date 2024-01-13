@@ -1,7 +1,7 @@
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Home from "./pages/Home";
-// import Register from "./views/Register";
+import Register from "./pages/Register";
 // import DetailGame from "./views/DetailGame";
 
 const routes = [
@@ -9,10 +9,10 @@ const routes = [
     path: '/',
     Element: Home,
   },
-  // {
-  //   path: '/register',
-  //   Element: Register,
-  // },
+  {
+    path: '/register',
+    Element: Register,
+  },
   {
     path: '/admin',
     Element: Admin,

@@ -73,7 +73,7 @@ const Navbar1 = () => {
                 <Button variant='info' size='sm' className='ms-lg-5'>
                   <Link to='/login' className='text-decoration-none fw-semibold text-light'>Iniciar sesión</Link></Button>
                 <Navbar.Text>
-                  <Link to='/'
+                  <Link to='/register'
                     className='text-decoration-none link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover mx-2 fw-semibold'
                   >Registrate</Link>
                 </Navbar.Text>
