@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import UserAdmin from '../components/userAdmin/UserAdmin';
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <UserAdmin />
   )
-}
+};
 
 export default Admin
