@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Modal, Form, Table } from 'react-bootstrap';
 import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
-import { alertCustom } from '../../utils/alertCustom';
+import { alertCustom, alertConfirm } from '../../utils/alertCustom';
 import axios from 'axios';
 import ModalEditUser from './ModalEditUser';
-import { alertConfirm } from '../../utils/alertConfirm';
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 
@@ -20,7 +19,6 @@ const UserAdmin = () => {
       setIsLoading(true);
       const { data } = await axios.get(`${URL_BASE}/users`);
       setUsers(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
       alertCustom('Upps', 'Ha ocurrido un error al traer los usuarios', 'error');
@@ -32,9 +30,10 @@ const UserAdmin = () => {
   const deleteUser = async (id) => {
     try {
       setIsLoading(true);
-      alertConfirm('¿Esta seguro?', 'Esta por eliminar un usuario de manera definitiva', 'warning', 'Eliminar', async() => 
-      await axios.delete(`${URL_BASE}/users/${id}`))
-      getAllUsers();
+      alertConfirm('¿Esta seguro?', 'Esta por eliminar un usuario de manera definitiva', 'warning', 'Eliminar', async() => {
+        await axios.delete(`${URL_BASE}/users/${id}`)
+        getAllUsers()
+      })
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
     } finally {
