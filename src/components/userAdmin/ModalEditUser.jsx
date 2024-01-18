@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { alertCustom } from '../../utils/alertCustom';
 import axios from 'axios';
+import Select from 'react-select';
 
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
@@ -31,6 +32,11 @@ const ModalEditUser = ({user, setIsLoading, setChangeFlag}) => {
       setIsLoading(false);
     }
   };
+  
+
+  const handleSelectChange = ({value}) => {
+    console.log(value);
+  }
 
   return (
     <>
@@ -55,7 +61,7 @@ const ModalEditUser = ({user, setIsLoading, setChangeFlag}) => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>Apillido</Form.Label>
+              <Form.Label>Apellido</Form.Label>
               <Form.Control
                 type="text"
                 value={selectedUser ? selectedUser.lastName : ''}
@@ -80,6 +86,50 @@ const ModalEditUser = ({user, setIsLoading, setChangeFlag}) => {
                 }}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="role">
+              <Form.Label>Rol (El rol puede ser unicamente "ADMIN" o "CLIENT")</Form.Label>
+              <Form.Control
+                type="text"
+                value={selectedUser ? selectedUser.role : ''}
+                onChange={(e) => {
+                  setSelectedUser({
+                    ...selectedUser,
+                    role: e.target.value
+                  })
+                }}
+              />
+            </Form.Group>
+
+
+            {/* <Form.Group className="mb-3" controlId="rol">
+              <Form.Label>Rol</Form.Label>
+              <Select 
+                options={ user.map(option => ({label: option.role, value: option.role}))}
+                onChange={handleSelectChange}
+              />
+              <Form.Select aria-label="Default select example" 
+                defaultValue={{label: selectedUser.role}}
+                onChange={(e) => {
+                  setSelectedUser({
+                    ...selectedUser,
+                    role: e.target.value
+                  })
+                }}
+              >
+                <option value="ADMIN">ADMIN</option>
+                <option value="CLIENT">CLIENT</option>
+              </Form.Select>
+              <Form.Control
+                type=""
+                value={selectedUser ? selectedUser.email : ''}
+                onChange={(e) => {
+                  setSelectedUser({
+                    ...selectedUser,
+                    email: e.target.value
+                  })
+                }}
+              />
+            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>

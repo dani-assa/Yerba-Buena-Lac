@@ -4,6 +4,7 @@ import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
 import { alertCustom } from '../../utils/alertCustom';
 import axios from 'axios';
 import ModalEditUser from './ModalEditUser';
+import { alertConfirm } from '../../utils/alertConfirm';
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 
@@ -31,7 +32,8 @@ const UserAdmin = () => {
   const deleteUser = async (id) => {
     try {
       setIsLoading(true);
-      await axios.delete(`${URL_BASE}/users/${id}`);
+      alertConfirm('¿Esta seguro?', 'Esta por eliminar un usuario de manera definitiva', 'warning', 'Eliminar', async() => 
+      await axios.delete(`${URL_BASE}/users/${id}`))
       getAllUsers();
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
