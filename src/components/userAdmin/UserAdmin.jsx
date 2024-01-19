@@ -5,6 +5,7 @@ import { alertCustom, alertConfirm } from '../../utils/alertCustom';
 import axios from 'axios';
 import ModalEditUser from './ModalEditUser';
 const URL_BASE = import.meta.env.VITE_URL_BASE;
+const URI_DB = import.meta.env.VITE_URI_DB;
 
 
 
@@ -17,7 +18,7 @@ const UserAdmin = () => {
   const getAllUsers = async() => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`${URL_BASE}/users`);
+      const { data } = await axios.get(`${URL_BASE}/users/getAll`);
       setUsers(data);
     } catch (error) {
       console.log(error);
@@ -31,7 +32,7 @@ const UserAdmin = () => {
     try {
       setIsLoading(true);
       alertConfirm('¿Esta seguro?', 'Esta por eliminar un usuario de manera definitiva', 'warning', 'Eliminar', async() => {
-        await axios.delete(`${URL_BASE}/users/${id}`)
+        await axios.delete(`${URL_BASE}/users/delete/${id}`)
         getAllUsers()
       })
     } catch (error) {
@@ -44,7 +45,7 @@ const UserAdmin = () => {
   const disabledUser = async ({target}, id) => {
     try {
       setIsLoading(true);
-      await axios.patch(`${URL_BASE}/users/${id}`, {disabled: !target.checked});
+      await axios.patch(`${URL_BASE}/users/disable/${id}`, {disabled: !target.checked});
       getAllUsers();
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
@@ -86,10 +87,10 @@ const UserAdmin = () => {
                         <td className="text-center">{user.name}</td>
                         <td className="text-center">{user.lastName}</td>
                         <td className="text-center">{user.email}</td>
-                        <td className="text-center"><Form.Check checked={!user.disabled} onChange={(e) => disabledUser(e, user.id)}/> </td>
+                        <td className="text-center"><Form.Check checked={!user.disabled} onChange={(e) => disabledUser(e, user._id)}/> </td>
                         <td className="text-center">
                           <Col>
-                            <Button variant='danger' size='sm' onClick={() => deleteUser(user.id)}>Eliminar</Button>
+                            <Button variant='danger' size='sm' onClick={() => deleteUser(user._id)}>Eliminar</Button>
                             <ModalEditUser 
                             user={user} 
                             setIsLoading={setIsLoading} 
