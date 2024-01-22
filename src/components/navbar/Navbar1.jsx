@@ -80,7 +80,7 @@ const Navbar1 = () => {
               </div>
               )
               }
-              {user?.role === 'ADMIN'
+              {user?.role === 'admin'
                 ? (
                   <li className='nav-item'>
                     <Button variant='dark' size='sm' className='mt-1 ms-3 text-ligth fw-semibold' onClick={() => navigate('/admin')} >Panel Admin</Button>

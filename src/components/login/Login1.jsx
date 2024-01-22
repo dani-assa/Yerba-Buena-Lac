@@ -8,10 +8,10 @@ const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const Login1 = () => {
   const formDataRef = useRef({
-    email: '',
-    password: '',
+    dni: '',
+    password: ''
   });
-
+console.log(formDataRef);
   const [errors, setErrors] = useState({});
   const [flagLogin, setFlagLogin] = useState(false);
   const navigate = useNavigate(); 
@@ -33,6 +33,10 @@ const handleSubmit = async(e) => {
     newErrors.email = 'Tienes que escribir un email';
   }
 
+  if (!formDataRef.current.dni) {
+    newErrors.dni = 'Tienes que escribir tu DNI';
+  }
+
   if (!formDataRef.current.password) {
     newErrors.password = 'Tienes que escribir una contraseña';
   }
@@ -43,8 +47,9 @@ const handleSubmit = async(e) => {
     const dataLogin = formDataRef.current;
     try {
       setFlagLogin(true);
-      const { data } = await axios.get(`${URL_BASE}/users/?email=${dataLogin.email}`);
+      const { data } = await axios.get(`${URL_BASE}/users/getAll/?dni=${dataLogin.dni}`);
       const [ user ] = data;
+      console.log(data, user, dataLogin);
       if(!user) return alertCustom('Uppss', message.userNotFount, 'warning');
 
       if(dataLogin.password !== user.password) return alertCustom('Uppss', message.emailOrPasswordBad, 'warning');
@@ -53,7 +58,8 @@ const handleSubmit = async(e) => {
         email: user.email,
         name: user.name,
         lastName: user.lastName,
-        userId: user.id,
+        dni: user.dni,
+        userId: user._id,
         role: user.role
       });
       localStorage.setItem('userLog', userJson);
@@ -72,19 +78,19 @@ const handleSubmit = async(e) => {
       <Row className='justify-content-center'>
         <Col sm={8}>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail1">
-            <Form.Label>Email</Form.Label>
+          <Form.Group className="mb-3" controlId="formBasicDni">
+            <Form.Label>DNI</Form.Label>
             <Form.Control 
-              type="email" 
-              placeholder="Enter email" 
-              name='email'
-              defaultValue={formDataRef.current.email}
+              type="number" 
+              placeholder="Ingrese su DNI (sin puntos)" 
+              name='dni'
+              defaultValue={formDataRef.current.dni}
               onChange={handleChange} 
-              isValid={formDataRef.current.email && !errors.email}
-              isInvalid={!!errors.email}
+              isValid={formDataRef.current.dni && !errors.dni}
+              isInvalid={!!errors.dni}
               />
               <Form.Control.Feedback type='invalid'>
-                {errors.email}
+                {errors.dni}
               </Form.Control.Feedback>
               <Form.Control.Feedback type='valid'>
                 Nice 🙌

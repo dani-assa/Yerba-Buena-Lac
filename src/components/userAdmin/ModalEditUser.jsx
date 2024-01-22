@@ -23,7 +23,7 @@ const ModalEditUser = ({user, setIsLoading, setChangeFlag}) => {
   const handleSaveEdit = async() => {
     try {
       setIsLoading(true);
-      await axios.patch(`${URL_BASE}/users/${selectedUser.id}`, selectedUser);
+      await axios.patch(`${URL_BASE}/users/editById/${selectedUser._id}`, selectedUser);
       setChangeFlag(prev => !prev);
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
@@ -33,10 +33,6 @@ const ModalEditUser = ({user, setIsLoading, setChangeFlag}) => {
     }
   };
   
-
-  const handleSelectChange = ({value}) => {
-    console.log(value);
-  }
 
   return (
     <>

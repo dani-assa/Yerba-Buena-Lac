@@ -9,11 +9,12 @@ const RegisterUser = () => {
     name: '',
     lastName: '',
     email: '',
+    dni: '',
     password: '',
-    passwordCheck: '',
-    role: 'CLIENT'
+    passwordCheck: ''
   });
   const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData((prev) => ({
@@ -24,18 +25,27 @@ const RegisterUser = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/;
+    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,20}$/;
+    const dniRegex = /^\d{8}(?:[-\s]\d{4})?$/;
     const newErrors = {};
 
     if(!formData.name) {
       newErrors.name = 'Tienes que escribir un nombre';
     }
     if(!formData.lastName) {
-      newErrors.lastName = 'Tienes que escribir un apellido';
+      newErrors.lastName = 'Tienes que escribir un apellido.';
     }
 
     if (!formData.email) {
-      newErrors.email = 'Tienes que escribir un email';
+      newErrors.email = 'Tienes que escribir un email.';
+    }
+
+    if (!formData.dni) {
+      newErrors.dni = 'Tienes que escribir un DNI';
+    } 
+
+    if(formData.dni && !dniRegex.test(formData.dni)) {
+      newErrors.dni = 'Escribe solo números.'
     }
 
     if (!formData.password) {
@@ -43,7 +53,7 @@ const RegisterUser = () => {
     }
 
     if (formData.password && !passRegex.test(formData.password)) {
-      newErrors.password = 'La contraseña no cumple con los requisitos'
+      newErrors.password = 'La contraseña debe tener por lo menos una letra mayuscula, una minúscula, un caracter especial (ej:! - $). Debe tener una longitud entre 6 y 20 caracteres. '
     }
 
     if (!formData.passwordCheck) {
@@ -60,12 +70,13 @@ const RegisterUser = () => {
       console.log(formData);
     };
 
-    const user = await axios.post(`${URL_BASE}/users`, formData)
+    const user = await axios.post(`${URL_BASE}/users/create`, formData)
+    console.log(user);
   }
   return (
     <Container>
       <Row className='justify-content-center'>
-        <Col sm={10}>
+        <Col sm={6}>
           <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Nombre</Form.Label>
@@ -116,6 +127,24 @@ const RegisterUser = () => {
               />
               <Form.Control.Feedback type='invalid'>
                 {errors.email}
+              </Form.Control.Feedback>
+              <Form.Control.Feedback type='valid'>
+                Nice 🙌
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicDni">
+              <Form.Label>DNI</Form.Label>
+              <Form.Control 
+              type="number" 
+              placeholder="Ej: 38123456" 
+              name='dni'
+              value={formData.dni}
+              onChange={handleChange}
+              isValid={formData.dni && !errors.dni}
+              isInvalid={!!errors.dni}
+              />
+              <Form.Control.Feedback type='invalid'>
+                {errors.dni}
               </Form.Control.Feedback>
               <Form.Control.Feedback type='valid'>
                 Nice 🙌

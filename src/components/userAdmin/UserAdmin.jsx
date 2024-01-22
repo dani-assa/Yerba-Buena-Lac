@@ -71,7 +71,7 @@ const UserAdmin = () => {
               <Table striped bordered variant='dark'>
                 <thead>
                   <tr>
-                    <th className="text-center">id</th>
+                    <th className="text-center">Rol</th>
                     <th className="text-center">Nombre</th>
                     <th className="text-center">Apellido</th>
                     <th className="text-center">Email</th>
@@ -83,7 +83,7 @@ const UserAdmin = () => {
                   { users &&
                     users.map((user, i) => (
                       <tr key={i}>
-                        <td className="text-center">{user.id}</td>
+                        <td className="text-center">{user.role}</td>
                         <td className="text-center">{user.name}</td>
                         <td className="text-center">{user.lastName}</td>
                         <td className="text-center">{user.email}</td>
