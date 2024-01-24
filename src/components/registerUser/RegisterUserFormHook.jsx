@@ -5,6 +5,7 @@ import { useAuth } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const RegisterUserFormHook = () => {
+  const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,20}$/;
   const {
     register,
     handleSubmit,
@@ -73,7 +74,7 @@ const RegisterUserFormHook = () => {
             <Form.Group className="" controlId="formBasicDni">
               <Form.Label></Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="DNI (sin puntos)"
                 {...register("dni", { required: true })}
               />
@@ -88,7 +89,7 @@ const RegisterUserFormHook = () => {
               <Form.Control
                 type="password"
                 placeholder="Contraseña"
-                {...register("password", { required: true })}
+                {...register("password", { required: true }, { pattern: passRegex })}
               />
               {errors.password && (
                 <Alert key="danger" variant="danger" size="sm">

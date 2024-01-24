@@ -10,17 +10,17 @@ const LoginFormHook = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { signin, errors: signinErrors } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    signin(data);
   });
-  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
-  const navigate = useNavigate();
   return (
     <Container>
       <Row className="justify-content-center">
         <Col sm={6}>
-          {registerErrors.map((error, i) => (
+          {signinErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
             </Alert>
@@ -30,14 +30,14 @@ const LoginFormHook = () => {
             <Form.Group className="" controlId="formBasicDni">
               <Form.Label></Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="DNI (sin puntos)"
                 {...register("dni", { required: true })}
               />
               {errors.dni && (
-                <Alert key="danger" variant="danger" size="sm">
+                <p key="danger" className="text-danger">
                   El DNI es requerido.
-                </Alert>
+                </p>
               )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -48,9 +48,9 @@ const LoginFormHook = () => {
                 {...register("password", { required: true })}
               />
               {errors.password && (
-                <Alert key="danger" variant="danger" size="sm">
+                <p key="danger" className="text-danger">
                   La contraseña es requerida.
-                </Alert>
+                </p>
               )}
             </Form.Group>
             <Button variant="primary" type="submit">
