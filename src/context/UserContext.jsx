@@ -1,6 +1,6 @@
-import React, { createContext, useState, useContext } from "react";
-import { registerRequest, loginRequest } from "../api/user";
-
+import React, { createContext, useState, useContext, useEffect } from "react";
+import { registerRequest, loginRequest, verifyTokenRequest } from "../api/user";
+import Cookies from "js-cookie";
 export const UserContext = createContext();
 
 export const useAuth = () => {
@@ -12,14 +12,14 @@ export const useAuth = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
 
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
-      setUser(res.data);
+      // setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
@@ -29,12 +29,42 @@ export const UserProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res);
-      console.log(user);
+      setUser(res.data);
+      setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
     }
   };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      const timer = setTimeout(() => {
+        setErrors([]);
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const cookie = Cookies.get();
+      if (!cookie.token) {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+      try {
+        const res = await verifyTokenRequest(Cookies.token);
+        console.log(res);
+        if (!res.data) return setIsAuthenticated(false);
+        isAuthenticated(true);
+        setUser(res.data);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    };
+    checkLogin();
+  }, []);
   return (
     <UserContext.Provider
       value={{

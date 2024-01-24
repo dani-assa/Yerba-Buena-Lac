@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import React from "react";
+import { useAuth } from "../../context/UserContext";
+import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  return (
-    isAuth ? <Outlet /> : <Navigate to='/' />
-  )
+  const { user, isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (isAuthenticated && user.role === "admin")
+    return <Navigate to="/admin" replace />;
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

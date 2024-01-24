@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar1 from "../navbar/Navbar1";
 import Footer from "../footer/Footer";
 import { UserProvider } from "../../context/UserContext";
-UserProvider
+UserProvider;
 
 const RootLayout = () => {
   return (
@@ -13,7 +13,7 @@ const RootLayout = () => {
       </main>
       <Footer />
     </UserProvider>
-  )
+  );
 };
 
-export default RootLayout
+export default RootLayout;

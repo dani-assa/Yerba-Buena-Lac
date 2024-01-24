@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Form, Row, Button, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginFormHook = () => {
   const {
@@ -10,8 +10,12 @@ const LoginFormHook = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signin, errors: signinErrors } = useAuth();
+  const { signin, errors: signinErrors,isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/results");
+  }, [isAuthenticated]);
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
@@ -57,6 +61,12 @@ const LoginFormHook = () => {
               Iniciar sesión
             </Button>
           </Form>
+          <p className="mt-2 d-flex justify-content-between">
+            Todavia no tienes cuenta?
+            <Link to="/register" className="text-decoration-none">
+              Registrate
+            </Link>
+          </p>
         </Col>
       </Row>
     </Container>

@@ -7,7 +7,6 @@ import { useAuth } from "../../context/UserContext";
 const Navbar1 = () => {
   // const user = JSON.parse(localStorage.getItem("userLog")) || undefined;
   const { user } = useAuth();
-  console.log(user);
   const navigate = useNavigate();
 
   const cerrarSesion = () => {

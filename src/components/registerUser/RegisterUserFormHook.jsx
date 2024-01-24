@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { Col, Container, Form, Row, Button, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterUserFormHook = () => {
-  const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,20}$/;
+  const passRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,20}$/;
   const {
     register,
     handleSubmit,
@@ -15,7 +16,7 @@ const RegisterUserFormHook = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/results");
+    if (isAuthenticated) navigate("/login");
   }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {
@@ -89,7 +90,11 @@ const RegisterUserFormHook = () => {
               <Form.Control
                 type="password"
                 placeholder="Contraseña"
-                {...register("password", { required: true }, { pattern: passRegex })}
+                {...register(
+                  "password",
+                  { required: true },
+                  { pattern: passRegex }
+                )}
               />
               {errors.password && (
                 <Alert key="danger" variant="danger" size="sm">
@@ -101,6 +106,12 @@ const RegisterUserFormHook = () => {
               Registrarse
             </Button>
           </Form>
+          <p className="mt-2 d-flex justify-content-between">
+            Ya tienes una cuenta?
+            <Link to="/login" className="text-decoration-none">
+              Iniciar sesión
+            </Link>
+          </p>
         </Col>
       </Row>
     </Container>

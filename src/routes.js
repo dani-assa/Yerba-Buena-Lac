@@ -5,34 +5,37 @@ import Register from "./pages/Register";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import Results from "./pages/Results";
 
-
 const routes = [
   {
-    path: '/',
+    path: "/",
     Element: Home,
   },
   {
-    path: '/register',
+    path: "/register",
     Element: Register,
   },
   {
-    path: '/login',
+    path: "/login",
     Element: Login,
   },
   {
-    path: '/results',
+    path: "/results",
     Element: Results,
   },
   {
-    path: '/',
-    Element: ProtectedRoute,
-    children: [
-      {
-        path: '/admin',
-        Element: Admin,
-      }
-    ]
-  }
+    path: "/admin",
+    Element: Admin,
+  },
+  // {
+  //   path: '/',
+  //   Element: ProtectedRoute,
+  //   children: [
+  //     {
+  //       path: '/admin',
+  //       Element: Admin,
+  //     }
+  //   ]
+  // }
 ];
 
 export { routes };
