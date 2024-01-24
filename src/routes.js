@@ -3,7 +3,8 @@ import Admin from "./pages/Admin";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
-// import DetailGame from "./views/DetailGame";
+import Results from "./pages/Results";
+
 
 const routes = [
   {
@@ -17,6 +18,10 @@ const routes = [
   {
     path: '/login',
     Element: Login,
+  },
+  {
+    path: '/results',
+    Element: Results,
   },
   {
     path: '/',

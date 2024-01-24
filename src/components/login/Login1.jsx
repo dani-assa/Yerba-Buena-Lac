@@ -47,7 +47,7 @@ const handleSubmit = async(e) => {
     const dataLogin = formDataRef.current;
     try {
       setFlagLogin(true);
-      const { data } = await axios.get(`${URL_BASE}/users/getAll/?dni=${dataLogin.dni}`);
+      const { data } = await axios.post(`${URL_BASE}/users/login`);
       const [ user ] = data;
       console.log(data, user, dataLogin);
       if(!user) return alertCustom('Uppss', message.userNotFount, 'warning');
