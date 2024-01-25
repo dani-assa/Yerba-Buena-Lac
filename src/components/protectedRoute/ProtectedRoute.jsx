@@ -6,7 +6,7 @@ import LoadingScreen from "../loadingScreen/LoadingScreen";
 const ProtectedRoute = () => {
   const { user, isAuthenticated, loading } = useAuth();
 
-  if(loading) return <LoadingScreen />
+  if (loading) return <LoadingScreen />;
   if (!loading && !isAuthenticated) return <Navigate to="/login" replace />;
   // if (isAuthenticated && user.role === "admin")
   //   return <Navigate to="/admin" replace />;

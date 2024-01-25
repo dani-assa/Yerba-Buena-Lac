@@ -6,11 +6,11 @@ import { useAuth } from "../../context/UserContext";
 
 const Navbar1 = () => {
   // const user = JSON.parse(localStorage.getItem("userLog")) || undefined;
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
-    localStorage.clear();
+    logout()
     navigate("/");
   };
 

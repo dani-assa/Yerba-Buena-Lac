@@ -10,6 +10,7 @@ import Results from "./pages/Results";
 import Navbar1 from "./components/navbar/Navbar1";
 import Footer from "./components/footer/Footer";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
+import ProtectedRouteAdmin from "./components/protectedRoute/ProtectedRouteAdmin";
 
 const App = () => {
   return (
@@ -23,8 +24,10 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<ErrorPage />} />
             <Route element={<ProtectedRoute />}>
-              <Route path="/admin" element={<Admin />} />
               <Route path="/results" element={<Results />} />
+            </Route>
+            <Route element={<ProtectedRouteAdmin />}>
+              <Route path="/admin" element={<Admin />} />
             </Route>
           </Routes>
         </main>
