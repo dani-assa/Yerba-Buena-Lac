@@ -11,6 +11,7 @@ import Navbar1 from "./components/navbar/Navbar1";
 import Footer from "./components/footer/Footer";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import ProtectedRouteAdmin from "./components/protectedRoute/ProtectedRouteAdmin";
+import Shift from "./pages/Shift";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<ErrorPage />} />
+            <Route path="shift" element={<Shift />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/results" element={<Results />} />
             </Route>

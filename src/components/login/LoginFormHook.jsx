@@ -10,7 +10,7 @@ const LoginFormHook = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signin, errors: signinErrors,isAuthenticated } = useAuth();
+  const { signin, errors: signinErrors, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +20,15 @@ const LoginFormHook = () => {
   const onSubmit = handleSubmit((data) => {
     signin(data);
   });
+
+  const showPassword = () => {
+    const pass = document.getElementById("password");
+    if (pass.type === "password") {
+      pass.type = "text";
+    } else {
+      pass.type = "password";
+    }
+  };
   return (
     <Container>
       <Row className="justify-content-center">
@@ -48,6 +57,7 @@ const LoginFormHook = () => {
               <Form.Label></Form.Label>
               <Form.Control
                 type="password"
+                id="password"
                 placeholder="Contraseña"
                 {...register("password", { required: true })}
               />
@@ -56,6 +66,13 @@ const LoginFormHook = () => {
                   La contraseña es requerida.
                 </p>
               )}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check
+                onClick={showPassword}
+                type="checkbox"
+                label="Mostrar contraseña"
+              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Iniciar sesión

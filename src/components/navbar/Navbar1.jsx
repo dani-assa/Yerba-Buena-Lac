@@ -51,9 +51,17 @@ const Navbar1 = () => {
               <Navbar.Text>
                 <Link
                   to="/"
-                  className="text-decoration-none link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                  className="text-decoration-none link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover me-lg-2"
                 >
                   Servicios
+                </Link>
+              </Navbar.Text>
+              <Navbar.Text>
+                <Link
+                  to="/shift"
+                  className="text-decoration-none link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                >
+                  Turnos
                 </Link>
               </Navbar.Text>
               <Navbar.Text>
